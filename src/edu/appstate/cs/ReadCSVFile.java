@@ -8,9 +8,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class ReadCSVFile {
+    private String filePath;
+
     private ArrayList<String> didNotParticipate = new ArrayList<>();
     private List<ArrayList<String>> finalList = new ArrayList<>();
     private ArrayList<String> individualColumn = new ArrayList<>();
@@ -29,14 +32,26 @@ public class ReadCSVFile {
     }
 
     private void generateCSVFile() {
-        String csvFile = "/home/scott/Downloads/Esmailis16_gradeCheckCalculated.csv";
+
+        Scanner scanner = new Scanner( System.in );
+        System.out.print( "What would you like to name this CSV file? " );
+        String title = scanner.nextLine();
+
+        //String csvFile = "/home/scott/Downloads/Esmailis16_gradeCheckCalculated.csv";
+
+        String[] explodedFilePath = filePath.split("\\.");
+        String tmpFilePath = explodedFilePath[0] + "_Calculated." + explodedFilePath[1];
+        System.out.println("Saving file: " + tmpFilePath);
 
         try
         {
-            FileWriter writer = new FileWriter(csvFile);
+            FileWriter writer = new FileWriter(tmpFilePath);
             String dnp = String.valueOf(didNotParticipate.size());
             String fl = String.valueOf(finalList.size());
             String size = String.valueOf(didNotParticipate.size() + finalList.size());
+            writer.append(title);
+            writer.append('\n');
+            writer.append('\n');
             writer.append("Class size: ");
             writer.append(size);
             writer.append('\n');
@@ -47,6 +62,7 @@ public class ReadCSVFile {
             writer.append(fl);
             writer.append('\n');
             writer.append("Students who had no answers were excluded from all calculations");
+            writer.append('\n');
             writer.append('\n');
             writer.append('\n');
 
@@ -105,7 +121,7 @@ public class ReadCSVFile {
 
 
     private void getColumn() {
-        for(int i = 1; i < finalList.get(i).size(); i++) {
+        for(int i = 1; i < finalList.get(0).size(); i++) {
             for (ArrayList<String> aFinalList : finalList) {
                 individualColumn.add(aFinalList.get(i));
             }
@@ -141,9 +157,15 @@ public class ReadCSVFile {
         }
         double percentCorrect = ((double)correct/total) * 100;
         DecimalFormat df = new DecimalFormat("#.##");
-        percentCorrect = Double.valueOf(df.format(percentCorrect));
-        percentSuccessExcludingNoAnswer.add(percentCorrect);
-        System.out.printf("Percent correct without NA: %.2f%%\n", percentCorrect);
+        try {
+            percentCorrect = Double.valueOf(df.format(percentCorrect));
+            percentSuccessExcludingNoAnswer.add(percentCorrect);
+            System.out.printf("Percent correct without NA: %.2f%%\n", percentCorrect);
+        }
+        catch (Exception ignored) {
+
+        }
+
     }
 
     private void percentSuccessIncludingNoAnswer(ArrayList<String> individualColumn) {
@@ -208,8 +230,11 @@ public class ReadCSVFile {
 
 
     private void generateParticipants() {
-
-        String csvFile = "/home/scott/Downloads/Esmailis16_gradeCheck.csv";
+        Scanner scanner = new Scanner( System.in );
+        System.out.print( "Enter full path to file(ex: /home/scott/grade.csv): " );
+        String csvFile = scanner.nextLine();
+        filePath = csvFile;
+        //String csvFile = "/home/scott/Downloads/Esmailis16_gradeCheck.csv";
         BufferedReader br = null;
         String line;
         String cvsSplitBy = ",";
@@ -221,10 +246,10 @@ public class ReadCSVFile {
 
                 String[] country = line.split(cvsSplitBy);
 
-                if (lineCount == 0) {
+                if (lineCount == 4) {
                     Collections.addAll(problemNames, country);
                 }
-                else {
+                else if (lineCount >= 5) {
                     int naCount = 0;
                     for (int i = 0; i < country.length; i++) {
                         if (country[i].equals("N/A")) {
@@ -248,6 +273,7 @@ public class ReadCSVFile {
                     }
 
                 }
+
                 lineCount++;
             }
         } catch (IOException e) {
