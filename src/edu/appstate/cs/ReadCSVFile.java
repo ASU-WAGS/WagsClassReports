@@ -34,7 +34,7 @@ public class ReadCSVFile {
     private void generateCSVFile() {
 
         Scanner scanner = new Scanner( System.in );
-        System.out.print( "What would you like to name this CSV file? " );
+        System.out.print( "What would you like to title this CSV file? (ex: Scott Spring 2016) " );
         String title = scanner.nextLine();
 
         //String csvFile = "/home/scott/Downloads/Esmailis16_gradeCheckCalculated.csv";
