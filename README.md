@@ -1,4 +1,4 @@
-# WagsEvaulateClass
+# WagsClassReports
 
 Built for end of semester WAGS reports
 
