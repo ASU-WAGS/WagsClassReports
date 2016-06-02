@@ -1,4 +1,4 @@
-# WagsClassReports
+# Wags Class Reports
 
 Built for end of semester WAGS reports
 
@@ -12,3 +12,6 @@ Not built for speed or security, if you would like to do that you're welcome to 
 * Give it the path to the file
 * Give it a title
 * It will generate a CSV file for you with _Calculated appended to the end
+* 
+
+
