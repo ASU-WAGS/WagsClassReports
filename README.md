@@ -2,7 +2,7 @@
 
 Built for end of semester WAGS reports
 
-Not built for speed or security, if you would like to do that you're welcome to it. 
+Not built for speed or security, if you would like to do that you're welcome to it. I was just tired of doing all the calculations by hand. 
 
 ###Steps:
 
