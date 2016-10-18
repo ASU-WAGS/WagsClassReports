@@ -1,3 +1,9 @@
+/**
+Author: Scott Shuffler
+Date: 6-13-16
+Purpose: Automation of end of semester grading for WAGS sections
+How to use: See README in the home folder
+**/
 package edu.appstate.cs;
 
 import java.io.BufferedReader;
